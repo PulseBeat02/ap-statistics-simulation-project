@@ -22,7 +22,7 @@ int main() {
         const int min = 1;
         const int max = trial * JUMPS_SIZE;
         int sum = 0;
-        #pragma omp parallel for
+        #pragma omp parallel for reduction(+:sum)
         for (int sample = 0; sample < SAMPLES; sample++) {
             int set[1000000];
             int index = 0;
