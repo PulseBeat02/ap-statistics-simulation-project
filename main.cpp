@@ -17,7 +17,7 @@ inline std::mt19937 &generator();
 int main() {
     int results[TRIALS];
     for (int trial = 1; trial <= TRIALS; trial++) {
-        const int min = trial;
+        const int min = 1;
         const int max = trial * JUMPS_SIZE;
         int sum = 0;
         #pragma omp parallel for
