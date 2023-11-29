@@ -8,7 +8,7 @@ inline bool isMultiple(const int set[], int size, int num);
 
 inline std::mt19937 &generator();
 
-#define TRIALS 1000
+#define TRIALS 1000000
 #define SAMPLES 1000
 #define JUMPS_SIZE 1000
 
@@ -32,6 +32,7 @@ int main() {
             sum += index;
         }
         results[trial - 1] = sum;
+        std::cout << trial << std::endl;
     }
     freopen("data.csv", "w", stdout);
     std::cout << "Max Random Range,Average Numbers Generated" << std::endl;
@@ -56,11 +57,7 @@ inline std::mt19937 &generator() {
 
 inline bool isMultiple(const int set[], const int size, const int num) {
     for (int i = 0; i < size; i++) {
-        int check = set[i];
-        if (!check) { // we reached the end of the "array"
-            return false;
-        }
-        if (num % check == 0) {
+        if (num % set[i] == 0) {
             return true;
         }
     }
