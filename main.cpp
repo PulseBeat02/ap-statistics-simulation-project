@@ -1,6 +1,6 @@
 #include <iostream>
 #include <random>
-#include <cstdio>
+#include <fstream>
 
 inline int generateRandom(int min, int max);
 
@@ -15,7 +15,9 @@ inline std::mt19937 &generator();
 // /usr/local/Cellar/llvm/17.0.5/bin/clang++ -fopenmp -o program main.cpp
 // ./program
 int main() {
-    int results[TRIALS];
+    std::ofstream csv;
+    csv.open("data.csv");
+    csv << "Random Max Range,Average Numbers Generated\n";
     for (int trial = 1; trial <= TRIALS; trial++) {
         const int min = 1;
         const int max = trial * JUMPS_SIZE;
@@ -31,17 +33,12 @@ int main() {
             }
             sum += index;
         }
-        results[trial - 1] = sum;
-        std::cout << trial << std::endl;
+        const double avg = (double) sum / SAMPLES;
+        std::string line = std::to_string(max) + "," + std::to_string(avg) + "\n";
+        csv << line;
+        csv.flush();
     }
-    freopen("data.csv", "w", stdout);
-    std::cout << "Max Random Range,Average Numbers Generated" << std::endl;
-    for (int trial = 1; trial <= TRIALS; trial++) {
-        const int max = trial * JUMPS_SIZE;
-        const int sum = results[trial - 1];
-        const float avg = (float) sum / SAMPLES;
-        printf("%d,%lf\n", max, avg);
-    }
+    csv.close();
     return 0;
 }
 
